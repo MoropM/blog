@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+   Session::put('locale', 'en');
     return view('welcome');
 });
 
