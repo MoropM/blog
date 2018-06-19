@@ -6,6 +6,7 @@
 </div>
 @endsection
 
+
 @section('scripts')
 <script src="{{asset('js/login.js')}}"></script>
 <script>
@@ -30,20 +31,24 @@
         size: '20px'
       },
 
-      TextfirshInput: {
+      TextFirstInput: {
         text: 'Correo Electronico',
         placeholder: 'Escribe tu correo electronico',
-        name: 'email'
+        name: 'email',
+        value:'{{ old('email') }}',
+        textError:'{{$errors->has('email')? $errors->first('email'):'' }}'
       },
       TextSecondhInput: {
         text: 'Contraseña',
         placeholder: 'Escribe tu contraseña aquí',
-        name: 'password'
+        name: 'password',
+        value:'{{ old('password') }}',
+        textError:'{{$errors->has('password')? $errors->first('password'):'' }}'
       },
       form: {
         action: '{{ route('login') }}',
         method: 'POST',
-        ajax: 'true'
+        ajax: false
       }
     }).ajax(function(e) {
       e.preventDefault();
@@ -60,12 +65,13 @@
         dataType: 'JSON',
         /* remind that 'data' is the response of the AjaxController */
         success: function(data) {
-          alert('sii ajax');
+      
           console.log(data);
         }
       });
     });
 
   });
+
 </script>
 @endsection

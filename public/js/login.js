@@ -17,13 +17,17 @@ var Login = function() {
       size: '16px',
       color: 'black'
     },
-    TextfirshInput: {
+    TextFirstInput: {
       text: 'Email',
+      value:'',
+      textError:null,
       placeholder: 'Type your Email',
       name: 'email'
     },
     TextSecondhInput: {
       text: 'Password',
+      value:'',
+      textError:null,
       placeholder: 'Type your Password',
       name: 'password',
     },
@@ -37,7 +41,7 @@ var Login = function() {
 
   //is a private function return html of login
   var getHtml = function() {
-    return '\
+  var html='\
     <div class="container">\
                <div class="row">\
                  <div class="col-md-8 col-md-offset-2">\
@@ -46,18 +50,31 @@ var Login = function() {
                        <div class="panel-body">\
                           <form class="form-horizontal" id="form-jira" method="' + attributes.form.method + '" action="' + attributes.form.action + '">\
                           ' + attributes.token + '\
-                             <div class="">\
-                                <label for="email" class="col-md-4 control-label">' + attributes.TextfirshInput.text + '</label>\
-                                <div class="col-md-6">\
-                                  <input id="email" type="email" class="form-control" name="' + attributes.TextfirshInput.name + '"  required autofocus>\
-                                </div>\
-                             </div>\
-                             <div class="">\
-                                <label for="password" class="col-md-4 control-label">' + attributes.TextSecondhInput.text + '</label>\
-                                <div class="col-md-6">\
-                                   <input id="password" type="password" class="form-control" name="' + attributes.TextSecondhInput.name + '"  required autofocus>\
-                                </div>\
-                             </div>\
+                            <div class="form-group">\
+                            <label for="email" class="col-md-4 control-label">' + attributes.TextFirstInput.text + '</label>\
+                               <div class="col-md-6">\
+                                  <input id="email" placeholder="'+attributes.TextFirstInput.placeholder+'" type="email" class="form-control" name="' + attributes.TextFirstInput.name + '"  value="'+attributes.TextFirstInput.value+'" required autofocus>';
+
+                                  if(attributes.TextFirstInput.textError!=null){
+                                      html=html+'<span class="invalid-feedback" role="alert">\
+                                                <strong>'+attributes.TextFirstInput.textError+'</strong>\
+                                                </span>';
+                                   }
+
+                              html=html+'</div>\
+                            </div>\
+                        <div class="form-group">\
+                             <label for="password" class="col-md-4 control-label">' + attributes.TextSecondhInput.text + '</label>\
+                              <div class="col-md-6">\
+                                   <input id="password" placeholder="'+attributes.TextSecondhInput.placeholder+'" type="password" class="form-control" name="' + attributes.TextSecondhInput.name + '" value="'+attributes.TextSecondhInput.value+'"  required autofocus>';
+                                   if(attributes.TextSecondhInput.textError!=null){
+                                       html=html+'<span class="invalid-feedback" role="alert">\
+                                                 <strong>'+attributes.TextSecondhInput.textError+'</strong>\
+                                                 </span>';
+                                    }
+
+                                   html=html+'</div>\
+                              </div>\
                              <div class="form-group">\
                                  <div class="col-md-6 col-md-offset-4">\
                                      <div class="checkbox">\
@@ -80,6 +97,8 @@ var Login = function() {
            </div>\
        </div>';
 
+       return html;
+
 
   }
 
@@ -100,15 +119,19 @@ var Login = function() {
     param.hasOwnProperty('text') ? (param.text.hasOwnProperty('size') ? attributes.text.size = param.text.size : '') : '';
     param.hasOwnProperty('text') ? (param.text.hasOwnProperty('color') ? attributes.text.color = param.text.color : '') : '';
 
-    //check values of TextfirshInput attributes
-    param.hasOwnProperty('TextfirshInput') ? (param.TextfirshInput.hasOwnProperty('text') ? attributes.TextfirshInput.text = param.TextfirshInput.text : '') : '';
-    param.hasOwnProperty('TextfirshInput') ? (param.TextfirshInput.hasOwnProperty('placeholder') ? attributes.TextfirshInput.placeholder = param.TextfirshInput.placeholder : '') : '';
-    param.hasOwnProperty('TextfirshInput') ? (param.TextfirshInput.hasOwnProperty('name') ? attributes.TextfirshInput.name = param.TextfirshInput.name : '') : '';
+    //check values of TextFirstInput attributes
+    param.hasOwnProperty('TextFirstInput') ? (param.TextFirstInput.hasOwnProperty('text') ? attributes.TextFirstInput.text = param.TextFirstInput.text : '') : '';
+    param.hasOwnProperty('TextFirstInput') ? (param.TextFirstInput.hasOwnProperty('placeholder') ? attributes.TextFirstInput.placeholder = param.TextFirstInput.placeholder : '') : '';
+    param.hasOwnProperty('TextFirstInput') ? (param.TextFirstInput.hasOwnProperty('name') ? attributes.TextFirstInput.name = param.TextFirstInput.name : '') : '';
+    param.hasOwnProperty('TextFirstInput') ? (param.TextFirstInput.hasOwnProperty('value') ? attributes.TextFirstInput.value = param.TextFirstInput.value : '') : '';
+    param.hasOwnProperty('TextFirstInput') ? (param.TextFirstInput.hasOwnProperty('textError') ? attributes.TextFirstInput.textError = param.TextFirstInput.textError : '') : '';
 
     //check values of TextSecondhInput attributes
     param.hasOwnProperty('TextSecondhInput') ? (param.TextSecondhInput.hasOwnProperty('text') ? attributes.TextSecondhInput.text = param.TextSecondhInput.text : '') : '';
     param.hasOwnProperty('TextSecondhInput') ? (param.TextSecondhInput.hasOwnProperty('placeholder') ? attributes.TextSecondhInput.placeholder = param.TextSecondhInput.placeholder : '') : '';
     param.hasOwnProperty('TextSecondhInput') ? (param.TextSecondhInput.hasOwnProperty('name') ? attributes.TextSecondhInput.name = param.TextSecondhInput.name : '') : '';
+    param.hasOwnProperty('TextSecondhInput') ? (param.TextSecondhInput.hasOwnProperty('value') ? attributes.TextSecondhInput.value = param.TextSecondhInput.value : '') : '';
+    param.hasOwnProperty('TextSecondhInput') ? (param.TextSecondhInput.hasOwnProperty('textError') ? attributes.TextSecondhInput.textError = param.TextSecondhInput.textError : '') : '';
 
     //check values of form attributes
     param.hasOwnProperty('form') ? (param.form.hasOwnProperty('method') ? attributes.form.method = param.form.method : '') : '';
@@ -126,8 +149,8 @@ var Login = function() {
 
     return {
       ajax: function(clousure) {
-        if (attributes.form.ajax) { 
-           document.getElementById("form-jira").onsubmit =   clousure;
+        if (attributes.form.ajax) {
+          document.getElementById("form-jira").onsubmit = clousure;
 
         }
 
@@ -136,7 +159,6 @@ var Login = function() {
     }
 
   }
-
 
   this.build = function(attributes) {
 
