@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,9 +11,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/postajax', ['as'=>'ajax',function (Request $request) {
+    $response = array(
+    'status' => 'success',
+    'msg' => $request->message,
+);
+    return response()->json($response);
+}]);
 
 Route::get('/', function () {
-   Session::put('locale', 'en');
+    Session::put('locale', 'en');
     return view('welcome');
 });
 
